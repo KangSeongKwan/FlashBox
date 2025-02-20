@@ -1,14 +1,24 @@
 package com.drive.flashbox.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.annotation.LastModifiedDate;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,11 +40,9 @@ public class Box extends BaseTimeEntity {
     @Column(name = "event_end_date", nullable = false)
     private LocalDateTime eventEndDate;
 
-    @Column(name = "upload_date")
-    private LocalDateTime uploadDate;
-
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "modified_date", nullable = false)
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     @Column(name = "boom_date")
     private LocalDateTime boomDate;
