@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PictureRepository extends JpaRepository<Picture, Long> {
     // bid와 pid로 Picture를 찾는 메서드
-    Optional<Picture> findByPidAndBoxBid(Long pid, Long bid);
+    Optional<Picture> findByPidAndBid(Long pid, Long bid);
 }

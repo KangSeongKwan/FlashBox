@@ -15,7 +15,7 @@ public class PictureService {
 
     @Transactional(readOnly = true)
     public PictureDTO getPictureDetails(Long bid, Long pid) {
-        Picture picture = pictureRepository.findByPidAndBoxBid(pid, bid)
+        Picture picture = pictureRepository.findByPidAndBid(pid, bid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이미지 또는 박스를 찾을 수 없습니다."));
         
         return PictureDTO.builder()
