@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.LastModifiedDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -30,11 +32,9 @@ public class Box extends BaseTimeEntity {
     @Column(name = "event_end_date", nullable = false)
     private LocalDateTime eventEndDate;
 
-    @Column(name = "upload_date")
-    private LocalDateTime uploadDate;
-
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "modified_date", nullable = false)
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     @Column(name = "boom_date")
     private LocalDateTime boomDate;
