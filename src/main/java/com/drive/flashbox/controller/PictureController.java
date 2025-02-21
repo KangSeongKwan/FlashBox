@@ -4,6 +4,7 @@ import com.drive.flashbox.dto.PictureDto;
 import com.drive.flashbox.service.PictureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,4 +22,11 @@ public class PictureController {
         PictureDto pictureDTO = pictureService.getPictureDetails(bid, pid);
         return ResponseEntity.ok(pictureDTO);
     }
+    
+    @DeleteMapping("/{bid}/picture/{pid}")
+    public ResponseEntity<Void> deletePicture(@PathVariable Long bid, @PathVariable Long pid) {
+        pictureService.deletePicture(bid, pid);
+        return ResponseEntity.noContent().build(); 
+    }
+    
 }

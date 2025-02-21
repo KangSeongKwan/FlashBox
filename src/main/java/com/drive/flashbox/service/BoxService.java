@@ -49,8 +49,9 @@ public class BoxService {
 		// 3) ZIP 파일 생성 (메모리 내 생성; 대용량일 경우 다른 방식을 고려)
 		byte[] zipBytes = createZipFileInMemory(pictures);
 
-		// 4) ZIP 파일을 S3에 업로드 (예: "temp/box_{bid}.zip" 경로)
-		String zipFileName = "temp/box_" + bid + ".zip";
+		// 4) ZIP 파일을 S3에 업로드 (예: "temp/박스이름.zip" 경로)
+		String safeBoxName = box.getName().trim().replaceAll("\\s+", "_");
+		String zipFileName = "temp/" + safeBoxName + ".zip";
 		s3Service.uploadFileToS3(zipFileName, zipBytes);
 
 		// 5) 업로드된 ZIP 파일의 Pre-signed URL 생성
