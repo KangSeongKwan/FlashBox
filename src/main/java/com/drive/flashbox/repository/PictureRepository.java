@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PictureRepository extends JpaRepository<Picture, Long> {
     // bid와 pid로 Picture를 찾는 메서드
-    Optional<Picture> findByPidAndBid(Long pid, Long bid);
+    Optional<Picture> findByPidAndBoxBid(Long pid, Long bid);
     // 1개의 박스에는 여러개의 사진이 있으니 List로 받아오기
     List<Picture> findAllByBoxBid(Long bid);
 }
