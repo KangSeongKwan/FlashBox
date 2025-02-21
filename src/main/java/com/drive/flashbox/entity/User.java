@@ -39,5 +39,5 @@ public class User extends BaseTimeEntity {
     // 사용자 - 박스 중간 테이블 매핑 (1:N)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<BoxUser> boxUsers = new ArrayList<>();
-
+    
 }
