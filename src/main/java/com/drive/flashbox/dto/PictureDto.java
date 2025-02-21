@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PictureDTO {
+public class PictureDto {
     private Long pid;
     private String name;
     private LocalDateTime uploadDate;

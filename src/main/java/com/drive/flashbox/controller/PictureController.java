@@ -1,6 +1,6 @@
 package com.drive.flashbox.controller;
 
-import com.drive.flashbox.dto.PictureDTO;
+import com.drive.flashbox.dto.PictureDto;
 import com.drive.flashbox.service.PictureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ public class PictureController {
     private final PictureService pictureService;
 
     @GetMapping("/{bid}/picture/{pid}")
-    public ResponseEntity<PictureDTO> getPictureDetails(@PathVariable Long bid, @PathVariable Long pid) {
-        PictureDTO pictureDTO = pictureService.getPictureDetails(bid, pid);
+    public ResponseEntity<PictureDto> getPictureDetails(@PathVariable Long bid, @PathVariable Long pid) {
+        PictureDto pictureDTO = pictureService.getPictureDetails(bid, pid);
         return ResponseEntity.ok(pictureDTO);
     }
 }
