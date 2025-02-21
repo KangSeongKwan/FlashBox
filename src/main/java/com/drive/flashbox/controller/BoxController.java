@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.drive.flashbox.dto.BoxDto;
 import com.drive.flashbox.entity.Box;
 import com.drive.flashbox.service.BoxService;
 
@@ -34,10 +35,10 @@ public class BoxController {
             @RequestParam(name = "eventEndDate") 
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate eventEndDate
     ) {
-		// LocalDate를 LocalDateTime으로 변환
-		LocalDateTime startDateTime = eventStartDate.atStartOfDay();
-        LocalDateTime endDateTime = eventEndDate.atStartOfDay().plusDays(1).minusSeconds(1); // 이벤트 종료 날짜는 자정 직전으로 설정
-		Box box = boxService.createBox(name, startDateTime, endDateTime);
+		
+		BoxDto boxDto = new BoxDto(name, eventStartDate, eventEndDate);
+		
+		Box box = boxService.createBox(boxDto);
 		
 		// 생성 후 box 목록 페이지로 가야하는 데 아직 없어서 임의로 지정
 		return "redirect:/box";

@@ -1,9 +1,8 @@
 package com.drive.flashbox.service;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
 
+import com.drive.flashbox.dto.BoxDto;
 import com.drive.flashbox.entity.Box;
 import com.drive.flashbox.entity.User;
 import com.drive.flashbox.entity.enums.RoleType;
@@ -20,15 +19,14 @@ public class BoxService {
 	final private UserRepository userRepository;
 
 	@Transactional
-	public Box createBox(String name, LocalDateTime eventStartDate, LocalDateTime eventEndDate) {
+	public Box createBox(BoxDto boxDto) {
 		// 유저가 없으면 생성이 안되서 임의로 1번 유저가 생성했다고 가정
 		User user = userRepository.getReferenceById(1L);
-		
-		Box box = new Box(name, eventStartDate, eventEndDate, user);
+
+		Box box = BoxDto.toEntity(boxDto, user);
 		
 		// BoxUser에 생성한 유저와 OWNER role 등록하는 메서드
 		box.addBoxUser(user, RoleType.OWNER);
-		
 		
 		return boxRepository.save(box);
 	}
