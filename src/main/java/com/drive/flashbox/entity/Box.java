@@ -1,5 +1,6 @@
 package com.drive.flashbox.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,13 @@ public class Box extends BaseTimeEntity {
         this.eventEndDate = eventEndDate;
         this.user = user;
         this.boomDate = LocalDateTime.now().plusDays(7);
+    }
+    
+    
+    public void editBox(String name, LocalDate eventStartDate, LocalDate eventEndDate) {
+    	this.name = name;
+    	this.eventStartDate = eventStartDate.atStartOfDay();
+    	this.eventEndDate = eventEndDate.atStartOfDay().plusDays(1).minusSeconds(1);
     }
 
     // BoxUser 추가 편의 메서드

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Box 생성</title>
+    <title>Box 수정</title>
     <script>
         function validateDates() {
             var startDate = document.getElementById("eventStartDate");
@@ -22,22 +22,26 @@
     </script>
 </head>
 <body>
-    <h2>Box</h2>
-    <form action="/box" method="post" onsubmit="validateDates()">
+    <h2>Box 수정</h2>
+    <form action="/box/{{box.bid}}" method="post" onsubmit="validateDates()">
+		<input type="hidden" name="_method" value="put">
         <label for="name">이름</label>
-        <input type="text" id="name" name="name" placeholder="Box 이름을 입력해주세요." required>
+        <input type="text" id="name" name="name" 
+       		th:value="${box?.name != null ? box.name : ''}" placeholder="Box 이름을 입력해주세요." required>
         <br><br>
 
         <label>모임 날짜</label>
         <br>
         <label for="eventStartDate">시작 날짜</label>
-        <input type="date" id="eventStartDate" name="eventStartDate" required onchange="validateDates()">
+        <input type="date" id="eventStartDate" name="eventStartDate"
+               th:value="${box?.eventStartDate != null ? box.eventStartDate : ''}" required onchange="validateDates()">
 
         <label for="eventEndDate">끝 날짜</label>
-        <input type="date" id="eventEndDate" name="eventEndDate" required onchange="validateDates()">
+        <input type="date" id="eventEndDate" name="eventEndDate"
+               th:value="${box?.eventEndDate != null ? box.eventEndDate : ''}" required onchange="validateDates()">
         <br><br>
 
-        <button type="submit">생성</button>
+        <button type="submit">수정</button>
     </form>
 </body>
 </html>
