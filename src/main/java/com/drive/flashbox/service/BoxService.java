@@ -11,6 +11,7 @@ import java.util.zip.ZipOutputStream;
 import org.springframework.stereotype.Service;
 
 import com.drive.flashbox.dto.request.BoxRequest;
+import com.drive.flashbox.dto.response.BoxResponse;
 import com.drive.flashbox.entity.Box;
 import com.drive.flashbox.entity.Picture;
 import com.drive.flashbox.entity.User;
@@ -109,5 +110,23 @@ public class BoxService {
 		
 		return boxRepository.save(box);
 	}
+	
+	public BoxResponse getBox(Long bid) {
+		// 없을 시 에러 처리 필요
+		return boxRepository.findById(bid).map(BoxResponse::from).orElseThrow();
+	}
+	
+	@Transactional
+	public void updateBox(Long bid, BoxRequest boxDto) {
+		// 없을 시 에러 처리 필요
+		Box box = boxRepository.findById(bid).orElseThrow();
+		box.editBox(boxDto.getName(),
+					boxDto.getEventStartDate().atStartOfDay(),
+					boxDto.getEventEndDate().atStartOfDay().plusDays(1).minusSeconds(1));
+		
+		
+	}
+
+	
 
 }
