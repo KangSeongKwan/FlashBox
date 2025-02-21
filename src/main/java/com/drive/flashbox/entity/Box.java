@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.drive.flashbox.entity.enums.RoleType;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,5 +61,24 @@ public class Box extends BaseTimeEntity {
     // 박스 - 사용자 중간 테이블 매핑 (1:N)
     @OneToMany(mappedBy = "box", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<BoxUser> boxUsers = new ArrayList<>();
+    
+    public Box(String name, LocalDateTime eventStartDate, LocalDateTime eventEndDate, User user) {
+        this.name = name;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.user = user;
+        this.boomDate = LocalDateTime.now().plusDays(7);
+    }
+
+    // BoxUser 추가 편의 메서드
+    public void addBoxUser(User user, RoleType role) {
+        BoxUser boxUser = BoxUser.builder()
+                .user(user)
+                .box(this)
+                .participateDate(LocalDateTime.now())
+                .role(role)
+                .build();
+        this.boxUsers.add(boxUser);
+    }
     
 }
