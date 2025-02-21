@@ -1,15 +1,5 @@
 package com.drive.flashbox.service;
 
-import com.drive.flashbox.entity.Box;
-import com.drive.flashbox.entity.Picture;
-import com.drive.flashbox.entity.User;
-import com.drive.flashbox.repository.BoxRepository;
-import com.drive.flashbox.repository.PictureRepository;
-import com.drive.flashbox.repository.UserRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
@@ -17,6 +7,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.springframework.stereotype.Service;
+
+import com.drive.flashbox.dto.request.BoxRequest;
+import com.drive.flashbox.entity.Box;
+import com.drive.flashbox.entity.Picture;
+import com.drive.flashbox.entity.User;
+import com.drive.flashbox.entity.enums.RoleType;
+import com.drive.flashbox.repository.BoxRepository;
+import com.drive.flashbox.repository.PictureRepository;
+import com.drive.flashbox.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -91,6 +95,18 @@ public class BoxService {
 			throw new RuntimeException("ZIP 파일 생성 중 오류가 발생했습니다.", e);
 		}
 	}
+	
+	@Transactional
+	public Box createBox(BoxRequest boxDto) {
+		// 유저가 없으면 생성이 안되서 임의로 1번 유저가 생성했다고 가정
+		User user = userRepository.getReferenceById(1L);
 
+		Box box = BoxRequest.toEntity(boxDto, user);
+		
+		// BoxUser에 생성한 유저와 OWNER role 등록하는 메서드
+		box.addBoxUser(user, RoleType.OWNER);
+		
+		return boxRepository.save(box);
+	}
 
 }
