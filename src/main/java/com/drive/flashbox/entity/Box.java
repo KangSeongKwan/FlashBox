@@ -81,4 +81,10 @@ public class Box extends BaseTimeEntity {
         this.boxUsers.add(boxUser);
     }
     
+    public void editBox(String name, LocalDateTime eventStartDate, LocalDateTime eventEndDate) {
+    	this.name = name;
+    	this.eventStartDate = eventStartDate;
+    	this.eventEndDate = eventEndDate;
+    }
+    
 }
