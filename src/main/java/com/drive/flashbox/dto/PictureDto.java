@@ -1,19 +1,26 @@
 package com.drive.flashbox.dto;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
 
+import com.drive.flashbox.entity.Box;
+import com.drive.flashbox.entity.User;
+
+import lombok.Builder;
+import lombok.Getter;
+
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class PictureDto {
+
     private Long pid;
+
     private String name;
+
     private LocalDateTime uploadDate;
+
     private String imageUrl;
-    private Long userId; // User 엔티티 대신 ID만
-    private Long boxId;  // Box 엔티티 대신 ID만
+
+    private User user;
+
+    private Box box;
 }
