@@ -1,16 +1,23 @@
 package com.drive.flashbox.entity;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.data.annotation.LastModifiedDate;
+import com.drive.flashbox.entity.enums.RoleType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -51,5 +58,24 @@ public class Box extends BaseTimeEntity {
     // 박스 - 사용자 중간 테이블 매핑 (1:N)
     @OneToMany(mappedBy = "box", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<BoxUser> boxUsers = new ArrayList<>();
+    
+    public Box(String name, LocalDateTime eventStartDate, LocalDateTime eventEndDate, User user) {
+        this.name = name;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.user = user;
+        this.boomDate = LocalDateTime.now().plusDays(7);
+    }
+
+    // BoxUser 추가 편의 메서드
+    public void addBoxUser(User user, RoleType role) {
+        BoxUser boxUser = BoxUser.builder()
+                .user(user)
+                .box(this)
+                .participateDate(LocalDateTime.now())
+                .role(role)
+                .build();
+        this.boxUsers.add(boxUser);
+    }
     
 }
