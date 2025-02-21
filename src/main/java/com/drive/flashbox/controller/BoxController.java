@@ -1,19 +1,16 @@
 package com.drive.flashbox.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.drive.flashbox.dto.BoxDto;
 import com.drive.flashbox.entity.Box;
 import com.drive.flashbox.service.BoxService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -42,5 +39,22 @@ public class BoxController {
 		
 		// 생성 후 box 목록 페이지로 가야하는 데 아직 없어서 임의로 지정
 		return "redirect:/box";
+	}
+
+	// box 다운
+	@GetMapping("/box/{bid}/download")
+	@ResponseBody
+	public Map<String, Object> downloadBox(@PathVariable Long bid,
+										   @RequestParam(value = "uid", required = false) Long uid) {
+		if (uid == null) {
+			uid = 1L; // 기본 테스트 사용자
+		}
+		String downloadUrl = boxService.generateZipAndGetPresignedUrl(bid, uid);
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("message", "박스 다운로드 링크 생성에 성공하였습니다");
+		response.put("downloadUrl", downloadUrl);
+		response.put("status", 200);
+		return response;
 	}
 }
