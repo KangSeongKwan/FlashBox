@@ -1,6 +1,6 @@
 package com.drive.flashbox.service;
 
-import com.drive.flashbox.dto.PictureDto;
+import com.drive.flashbox.dto.PictureDTO;
 import com.drive.flashbox.entity.Picture;
 import com.drive.flashbox.repository.PictureRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,11 @@ public class PictureService {
     private final PictureRepository pictureRepository;
 
     @Transactional(readOnly = true)
-    public PictureDto getPictureDetails(Long bid, Long pid) {
+    public PictureDTO getPictureDetails(Long bid, Long pid) {
         Picture picture = pictureRepository.findByPidAndBid(pid, bid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이미지 또는 박스를 찾을 수 없습니다."));
         
-        return PictureDto.builder()
+        return PictureDTO.builder()
                 .pid(picture.getPid())
                 .name(picture.getName())
                 .uploadDate(picture.getUploadDate())
